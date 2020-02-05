@@ -17,16 +17,33 @@ router.post('/register', function(req, res) {
   });
 });
 
-// router.get('/users', function(req, res) {
-//   User.find({}).exec().then(data =>{
-//     console.log(data);
-//   })
-// })
+router.get('/users', function(req, res) {
+  User.find({}).exec().then(data =>{
+    console.log(data);
+    res.status(200).send(data);
+  })
+})
 
-// router.get('/userRoles', function(req, res) {
-//   UserRoles.find({}).exec().then(data =>{
-//     console.log(data);
-//   })
-// })
+router.get('/userRoles', function(req, res) {
+  UserRoles.find({}).exec().then(data =>{
+    console.log(data);
+    res.status(200).send(data);
+  })
+})
 
+router.delete('/deleteUserRoles', function(req, res) {
+  UserRoles.find({}).remove().exec().then(data =>{
+    res.status(200).send();
+  }).catch(err =>{
+    res.status(400).send(err);
+  })
+})
+
+router.delete('/deleteUsers', function(req, res) {
+  User.find({}).remove().exec().then(data =>{
+    res.status(200).send();
+  }).catch(err =>{
+    res.status(400).send(err);
+  })
+})
 module.exports = router;
