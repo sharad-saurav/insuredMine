@@ -1,4 +1,5 @@
 var express = require('express');
+const app = express();
 var mongoose = require('mongoose');
 var router = express.Router();
 require('../models/userRoles');
@@ -6,16 +7,22 @@ require('../models/user');
 const userService = require('../services/userService');
 const User = mongoose.model('User');
 const UserRoles = mongoose.model('UserRoles');
+var fileupload = require('express-fileupload');
+router.use(fileupload());
 
-router.post('/register', function(req, res) {
-  console.log(req.body)
-  var data = req.body;
-  userService.registerUser(data).then(registeredUser => {
-    res.status(200).send(registeredUser);
-  }).catch(err => {
-      res.status(400).send(err);
+router.post('/uploadCsv', function(req, res) {
+  console.log('hit')
+  const file = req.files.file;
+  console.log(file)
+ file.mv('./uploads/' + file.name, function(err, result) {
+  if(err) 
+   throw err;
+  res.send({
+   success: true,
+   message: "File uploaded!"
   });
-});
+ })
+})
 
 router.get('/users', function(req, res) {
   User.find({}).exec().then(data =>{
