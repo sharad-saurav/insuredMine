@@ -48,14 +48,6 @@ router.post('/uploadCsv', function(req, res) {
             userObj['gender'] = data.gender;
             userObj['email'] = data.email;
             userObj['userType'] = data.userType;
-            userObj['firstname'] = data.firstname;
-            userObj['firstname'] = data.firstname;
-            userObj['firstname'] = data.firstname;
-            userObj['firstname'] = data.firstname;
-            userObj['firstname'] = data.firstname;
-            userObj['firstname'] = data.firstname;
-            userObj['firstname'] = data.firstname;
-            userObj['firstname'] = data.firstname;
 
             var policyInfoObj = {};
             policyInfoObj['policyNumber'] = data.policy_number;
@@ -93,7 +85,6 @@ router.post('/uploadCsv', function(req, res) {
                 policyInfoObj.companyCollectionId = data._id;
               }
             }) 
-
             policyCategory.save(function(err, data){
               if(err){
                 error.status = true;
@@ -102,7 +93,6 @@ router.post('/uploadCsv', function(req, res) {
                 globalObj['policyCategoryId'] = data._id;
               }
             }) 
-
             user.save(function(err, userData){
               if(err){
                 error.status = true;
@@ -125,8 +115,7 @@ router.post('/uploadCsv', function(req, res) {
               console.log("error.value------",error.value)
               reject(error.value);
             }else{
-
-              resolve(policyInfoObj)
+              resolve(policyInfoObj.userId);
             }
           }) 
           promise.then(function (temp){
