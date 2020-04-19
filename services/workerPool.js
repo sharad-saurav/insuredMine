@@ -5,10 +5,7 @@ const pool = new StaticPool({
     size: 4,
     task: function(n) {
         console.log(n)
-    },
-    workerData: {
-        num: 5,
-    },
+    }
 });
 
 for (let i = 0; i < 20; i++) {
@@ -18,3 +15,18 @@ for (let i = 0; i < 20; i++) {
 
     })();
 }
+
+function executeTask(data) {
+    console.log("send ", data);
+
+    // iterate over data 
+    (async () => {
+        await pool.exec(data);
+
+    })();
+}
+
+var toExport = {
+    executeTask
+};
+module.exports = toExport;
