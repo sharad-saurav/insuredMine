@@ -26,6 +26,7 @@
     "node-worker-threads-pool": "^1.2.2",
     "os-utils": "0.0.14",
     "request": "^2.88.0",
-    "usage": "^0.7.1"
+    "usage": "^0.7.1",
+    "workerpool": "^5.0.4"
   }
 }

@@ -14,7 +14,7 @@ function saveMessage(data){
         const saveMessage = new Message();
         saveMessage._id = data.date + ":" + data.time;
         saveMessage.message = data.message;
-        saveMessage.save();
+        return saveMessage.save();
     })
 };
 
