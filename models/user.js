@@ -9,27 +9,23 @@ const UserSchema = new Schema({
     },
     dob: {
         type: String,
-        required: true,
+        required: false,
     },
     address: {
         type: String,
-        required: true,
+        required: false,
     },
     phone: {
         type: String,
-        required: true,
+        required: false,
     },
     state: {
         type: String,
-        required: true,
+        required: false,
     },
     gender: {
         type: String,
-        required: true,
-    },
-    firstname: {
-        type: String,
-        required: true,
+        required: false,
     },
     email: {
         type: String,

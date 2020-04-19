@@ -9,4 +9,4 @@ const AgentSchema = new Schema({
     }
 });
 
-mongoose.model('Message', MessageSchema);
+mongoose.model('Agent', AgentSchema);

@@ -4,33 +4,37 @@ const Schema = mongoose.Schema;
 
 const PolicyInfoSchema = new Schema({
     policyNumber: {
-        type: number,
+        type: String,
         required: true,
     },
     policyStartDate: {
-        type: string,
+        type: String,
         required: true,
     },
     policyEndDate: {
-        type: string,
+        type: String,
         required: true,
     },
     policyCategory: {
-        type: string,
+        type: String,
         required: true,
     },
 
     collectionId: {
-        type: string,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Agent',
+        required: true
     },
+
     companyCollectionId: {
-        type: string,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'PolicyCarrier',
+        required: true
     },
     userId: {
-        type: string,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
 });
 
