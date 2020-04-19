@@ -13,6 +13,10 @@ const mongoose = require('mongoose');
 var osu = require('async-os-utils')
 var cpu = osu.cpu
 
+
+CHECK_CPU_USAGE_INTERVAL = 1000 * 5; // every 5 sec
+HIGH_CPU_USAGE_LIMIT = 70; // percentage
+
 mongoose.connect("mongodb+srv://sharad:sharad123@sharad-wezb2.mongodb.net/test?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -49,10 +53,6 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-CHECK_CPU_USAGE_INTERVAL = 1000 * 5; // every minute
-HIGH_CPU_USAGE_LIMIT = 70; // percentage
-
-
 autoRestart = setInterval(function () {
     cpu.usage()
         .then(cpuPercentage => {
@@ -67,6 +67,5 @@ autoRestart = setInterval(function () {
 
         })
 }, CHECK_CPU_USAGE_INTERVAL);
-
 
 module.exports = app;

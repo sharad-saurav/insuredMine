@@ -19,6 +19,7 @@
     "mongoose-timestamp": "^0.6.0",
     "morgan": "~1.9.1",
     "node-os-utils": "^1.2.2",
+    "node-worker-threads-pool": "^1.2.2",
     "os-utils": "0.0.14",
     "request": "^2.88.0",
     "usage": "^0.7.1"
