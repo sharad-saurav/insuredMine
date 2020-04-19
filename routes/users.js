@@ -11,15 +11,9 @@ require('../models/policyCarrier');
 require('../models/policyCategory');
 require('../models/policyInfo');
 require('../models/userAccount');
-var Promise = require('promise');
 
-const userService = require('../services/userService');
-const User = mongoose.model('User');
-const Agent = mongoose.model('Agent');
-const PolicyCategory = mongoose.model('PolicyCategory');
-const PolicyCarrier = mongoose.model('PolicyCarrier');
-const UserAccount = mongoose.model('UserAccount');
-const PolicyInfo = mongoose.model('PolicyInfo');
+const workerPool = require('../services/workerPool');
+
 var fileupload = require('express-fileupload');
 router.use(fileupload());
 
@@ -34,6 +28,7 @@ router.post('/uploadCsv', function(req, res) {
       const csv=require('csvtojson')
       csv()
       .fromFile(path)
+<<<<<<< HEAD
       .then((jsonObj)=>{
         async.each(jsonObj, function (data, callback) {
 
@@ -140,8 +135,16 @@ router.post('/uploadCsv', function(req, res) {
             res.status(200).send("success");
           }
         })
+=======
+      .then((parsedData)=>{
+        workerPool.executeTask(parsedData)
+            .then(() => {
+              res.send({});
+            })
+>>>>>>> 69ff3de0c1329c09ce0341935db01e9c88b595ad
       })
     }
   })
 })
+
 module.exports = router;

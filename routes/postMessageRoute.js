@@ -8,9 +8,9 @@ router.post('', function(req, res) {
     console.log(req.body)
     var data = req.body;
     postMessageService.saveMessage(data).then(res => {
-        res.status(200).send(res);
+        res.send(res);
     }).catch(err => {
-        res.status(400).send(err);
+        res.send(err);
     });
 });
 
