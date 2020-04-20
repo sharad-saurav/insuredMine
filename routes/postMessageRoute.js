@@ -7,7 +7,7 @@ const postMessageService = require('../services/postMessageService');
 router.post('', function(req, res) {
     console.log(req.body)
     var data = req.body;
-    postMessageService.saveMessage(data).then(res => {
+    return postMessageService.saveMessage(data).then(res => {
         res.send(res);
     }).catch(err => {
         res.send(err);

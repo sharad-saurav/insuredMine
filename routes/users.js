@@ -30,7 +30,7 @@ router.post('/uploadCsv', function(req, res) {
       csv()
       .fromFile(path)
       .then((parsedData)=>{
-        workerPool.executeTask(parsedData)
+        return workerPool.executeTask(parsedData)
             .then(() => {
               res.send({});
             })

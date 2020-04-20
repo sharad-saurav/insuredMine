@@ -1,21 +1,4 @@
 'use strict';
-var mongoose = require('mongoose');
-require('../models/userRoles');
-
-require('../models/agent');
-require('../models/message');
-require('../models/policyCarrier');
-require('../models/policyCategory');
-require('../models/policyInfo');
-require('../models/userAccount');
-
-const Agent = mongoose.model('Agent');
-const User = mongoose.model('User');
-const Message = mongoose.model('Message');
-const PolicyCarrier = mongoose.model('PolicyCarrier');
-const PolicyCategory = mongoose.model('PolicyCategory');
-const PolicyInfo = mongoose.model('PolicyInfo');
-const UserAccount = mongoose.model('UserAccount');
 
 /**
  * This returns the attendance data for students for a date
@@ -27,9 +10,28 @@ const UserAccount = mongoose.model('UserAccount');
 
 function saveData(data) {
 
-    console.log("data-----",data)
+    var mongoose = require('mongoose');
+    require('../../../models/userRoles');
+
+    require('../../../models/agent');
+    require('../../../models/user');
+    require('../../../models/message');
+    require('../../../models/policyCarrier');
+    require('../../../models/policyCategory');
+    require('../../../models/policyInfo');
+    require('../../../models/userAccount');
+
+    const Agent = mongoose.model('Agent');
+    const User = mongoose.model('User');
+    const PolicyCarrier = mongoose.model('PolicyCarrier');
+    const PolicyCategory = mongoose.model('PolicyCategory');
+    const PolicyInfo = mongoose.model('PolicyInfo');
+    const UserAccount = mongoose.model('UserAccount');
+
+    let execArray = [];
+
     var agent = new Agent;
-    var agentPromise = agent.save();
+    execArray.push(agent.save());
     
     var userObj = {};
     userObj['firstname'] = data.firstname;
@@ -50,22 +52,24 @@ function saveData(data) {
     userObj['firstname'] = data.firstname;
 
     var user = new User(userObj);
-    var userPromise = user.save();
+    execArray.push(user.save());
 
     
 
     var policyCategory = new PolicyCategory({categoryName: data.category_name});
-    var policyCategoryPromise = policyCategory.save();
+    execArray.push(policyCategory.save());
 
     var policyCarrier = new PolicyCarrier({companyName: data.company_name});
-    var policyCarrrierPromise = policyCarrier.save();
+    execArray.push(policyCarrier.save());
 
 
-    Promise.all([policyCarrrierPromise, policyCategoryPromise, userPromise, agentPromise])
+    Promise.all(execArray)
         .then((values) => {
+
+            let dependentCollectionsExecArray = [];
             var userAccount = new UserAccount({accountName: data.account_name});
             userAccount.userId = values[2]._id;
-            var userAccountPromise = userAccount.save();
+            dependentCollectionsExecArray.push(userAccount.save());
 
             var policyInfoObj = {};
             policyInfoObj['policyNumber'] = data.policy_number;
@@ -77,9 +81,9 @@ function saveData(data) {
             policyInfoObj.companyCollectionId = values[0]._id;
             policyInfoObj.userId = values[2]._id;
 
-            var policyInfoPromise = new PolicyInfo(policyInfoObj).save();
+            dependentCollectionsExecArray.push(new PolicyInfo(policyInfoObj).save());
 
-            Promise.all([userAccountPromise, policyInfoPromise])
+            Promise.all(dependentCollectionsExecArray)
                 .then((values) => {
                     console.log("all done")
                 })
