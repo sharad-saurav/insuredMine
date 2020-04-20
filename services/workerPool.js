@@ -6,6 +6,9 @@ var workerpool = require('workerpool');
 var pool = workerpool.pool();
 
 function executeTask(inputDatas) {
+
+    //return userService.saveData(inputDatas[0])
+
     console.log("send ");
     return new Promise((resolve, reject) => {
             pool.exec(userService.saveData, inputDatas)

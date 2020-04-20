@@ -10,6 +10,8 @@
 
 function saveData(data) {
     return new Promise((resolve, reject) => {
+
+        console.log(1)
         var mongoose = require('mongoose');
         require('../../../models/userRoles');
 
@@ -62,7 +64,7 @@ function saveData(data) {
         var policyCarrier = new PolicyCarrier({companyName: data.company_name});
         execArray.push(policyCarrier.save());
 
-
+        console.log(2)
         Promise.all(execArray)
             .then((values) => {
 
@@ -87,8 +89,16 @@ function saveData(data) {
                 Promise.all(dependentCollectionsExecArray)
                     .then((values) => {
                         console.log("all done")
-                    })
+                        return resolve({});
+                    }).catch(error => {
+                    console.error(error.message)
+                    return reject({})
+                });
             })
+            .catch(error => {
+                console.error(error.message)
+                return reject({})
+            });
     })
 
 }
