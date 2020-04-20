@@ -1,13 +1,21 @@
-'use strict'
-
+'use strict';
 var mongoose = require('mongoose');
 require('../models/userRoles');
-require('../models/user');
+
+require('../models/agent');
+require('../models/message');
+require('../models/policyCarrier');
+require('../models/policyCategory');
+require('../models/policyInfo');
+require('../models/userAccount');
+
+const Agent = mongoose.model('Agent');
 const User = mongoose.model('User');
-const UserRoles = mongoose.model('UserRoles');
-var Promise = require('bluebird');
-mongoose.Promise = Promise;
-Promise.promisifyAll(mongoose);
+const Message = mongoose.model('Message');
+const PolicyCarrier = mongoose.model('PolicyCarrier');
+const PolicyCategory = mongoose.model('PolicyCategory');
+const PolicyInfo = mongoose.model('PolicyInfo');
+const UserAccount = mongoose.model('UserAccount');
 
 /**
  * This returns the attendance data for students for a date
@@ -18,10 +26,11 @@ Promise.promisifyAll(mongoose);
  */
 
 function saveData(data) {
-    var agent = new Agent({agentName: data.agent});
+
+    console.log("data-----",data)
+    var agent = new Agent;
     var agentPromise = agent.save();
-
-
+    
     var userObj = {};
     userObj['firstname'] = data.firstname;
     userObj['dob'] = data.dob;
@@ -42,6 +51,8 @@ function saveData(data) {
 
     var user = new User(userObj);
     var userPromise = user.save();
+
+    
 
     var policyCategory = new PolicyCategory({categoryName: data.category_name});
     var policyCategoryPromise = policyCategory.save();
